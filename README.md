@@ -1,1 +1,0 @@
-# call-for-code-challenge-2021
