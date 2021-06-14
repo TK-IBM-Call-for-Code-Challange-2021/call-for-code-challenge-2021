@@ -1,11 +1,11 @@
-OAuth
+## OAuth
 - no API calls exposed on power devices
 - power devices use Google OAuth API (or other vendor's implementation) to identify itself and set up authorization
 - devices will then poll the authorization server on each interaction to verify grant or deny status
 - sample implementation: https://developers.google.com/identity/protocols/oauth2/limited-input-device
 
 
-Open API calls:
+## Open API calls:
 
 GetDeviceDetails
 - Input: N/A
