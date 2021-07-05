@@ -89,13 +89,21 @@ class Appliance(SimulatedObject):
             "model": self.model,
             "type": self.appliance_type
         }
-        print(record)
+        
         self.publish(record)
 
     def publish(self, record):
         client = context.get('mqtt', None)
         if client is not None:
-            client.publish(context['mqtt_topic'], json.dumps(record))
+            vals = []
+            for k,v in record.items():
+                if isinstance(v, str):
+                    vals.append(f"{k}='{v}'")
+                else:
+                    vals.append(f"{k}={v}") 
+            msg = " ".join(vals)
+            print(msg)
+            client.publish(context['mqtt_topic'], msg)
 
     
 class Building(object):
