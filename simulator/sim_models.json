@@ -1,0 +1,19 @@
+{
+    
+    "appliances": [
+        {
+            "id": "1",
+            "watts_per_hour": 500,
+            "model": "Toshiba whatever",
+            "type": "Refrigerator",
+            "sim_interval": 60
+        },
+        {   
+            "id": "2",
+            "watts_per_hour": 800,
+            "model": "Dell",
+            "type": "PC",
+            "sim_interval": 60
+        }
+    ] 
+}
