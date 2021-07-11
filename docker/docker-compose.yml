@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2 
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    environment:
+      ELASTICSEARCH_HOSTS: http://call-for-code.wop.al:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.13.2
+    user: root
+    volumes:
+      - ./filebeat/conf/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers/:/var/lib/docker/containers/:ro  
+    command: ["--strict.perms=false"]
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.13.2
+    links:
+    - elasticsearch
+    volumes:
+      - type: bind
+        source: ./logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    depends_on:
+    - elasticsearch
+    ports:
+      - "5000:5000"
+      - "5400:5400"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch

@@ -1,0 +1,9 @@
+filebeat.inputs:
+- type: mqtt
+  hosts: 
+    - tcp://call-for-code.wop.al:1883
+  topics: 
+    - devicedata
+    - testsim
+output.logstash:
+  hosts: ["call-for-code.wop.al:5044"]
